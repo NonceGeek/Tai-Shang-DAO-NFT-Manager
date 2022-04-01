@@ -24,6 +24,14 @@ export const NETWORKS = {
     rpcUrl: `https://mainnet.infura.io/v3/${INFURA_ID}`,
     blockExplorer: "https://etherscan.io/",
   },
+  // add Moonbeam network
+  moonbeam: {
+    name: "moonbeam",
+    color: "#00b0ef",
+    chainId: 1284,
+    blockExplorer: "https://moonbeam.moonscan.io/",
+    rpcUrl: `https://rpc.api.moonbeam.network`,
+  },
   kovan: {
     name: "kovan",
     color: "#7003DD",
