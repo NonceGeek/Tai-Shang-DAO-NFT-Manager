@@ -18,7 +18,7 @@ function Home({ yourLocalBalance, readContracts }) {
   // in this case, let's keep track of 'purpose' variable from our contract
   const purpose = useContractReader(readContracts, "Web3Dev", "purpose");
   const totalSupply = useContractReader(readContracts, "Web3Dev", "totalSupply");
-  const [ nfts, setNfts ] = useState([]);
+  const [nfts, setNfts] = useState([]);
   const blockExplorer = "https://moonbeam.moonscan.io/";
 
   const getNft = async (mintedNfts, i) => {
@@ -50,11 +50,10 @@ function Home({ yourLocalBalance, readContracts }) {
   }, [totalSupply]);
 
   /**
-   * description: "https://web3dev.nft.doge.university?token_id=1306495467"
-image: "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHByZXNlcnZlQXNwZWN0UmF0aW89InhNaW5ZTWluIG1lZXQiIHZpZXdCb3g9IjAgMCAzNTAgMzUwIj48c3R5bGU+LmJhc2UgeyBmaWxsOiB3aGl0ZTsgZm9udC1mYW1pbHk6IHNlcmlmOyBmb250LXNpemU6IDE0cHg7IH08L3N0eWxlPjxyZWN0IHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIGZpbGw9ImJsYWNrIiAvPjx0ZXh0IHg9IjEwIiB5PSIyMCIgY2xhc3M9ImJhc2UiPkJhZGdlczogPC90ZXh0Pjx0ZXh0IHg9IjEwIiB5PSI0MCIgY2xhc3M9ImJhc2UiPjwvdGV4dD48dGV4dCB4PSIxMCIgeT0iNjAiIGNsYXNzPSJiYXNlIj5TZWUgTkZUIHJlbmRlcmVkIGluOiA8L3RleHQ+PHRleHQgeD0iMTAiIHk9IjgwIiBjbGFzcz0iYmFzZSI+aHR0cHM6Ly93ZWIzZGV2Lm5mdC5kb2dlLnVuaXZlcnNpdHk/dG9rZW5faWQ9MTMwNjQ5NTQ2NzwvdGV4dD48dGV4dCB4PSIxMCIgeT0iMTAwIiBjbGFzcz0iYmFzZSI+MTA8L3RleHQ+PHRleHQgeD0iMTAiIHk9IjEyMCIgY2xhc3M9ImJhc2UiPjg8L3RleHQ+PHRleHQgeD0iMTAiIHk9IjE0MCIgY2xhc3M9ImJhc2UiPjU8L3RleHQ+PHRleHQgeD0iMTAiIHk9IjE2MCIgY2xhc3M9ImJhc2UiPjU8L3RleHQ+PHRleHQgeD0iMTAiIHk9IjE4MCIgY2xhc3M9ImJhc2UiPjc8L3RleHQ+PHRleHQgeD0iMTAiIHk9IjIwMCIgY2xhc3M9ImJhc2UiPjM8L3RleHQ+PHRleHQgeD0iMTAiIHk9IjIyMCIgY2xhc3M9ImJhc2UiPjwvdGV4dD48L3N2Zz4="
-name: "web3dev #1306495467"
-owner: "0xAbbcD9A203f2Ca423777dFbb915cb3fC66dCe5B8"
-   * 
+    description: "https://web3dev.nft.doge.university?token_id=1306495467"
+    image: "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHByZXNlcnZlQXNwZWN0UmF0aW89InhNaW5ZTWluIG1lZXQiIHZpZXdCb3g9IjAgMCAzNTAgMzUwIj48c3R5bGU+LmJhc2UgeyBmaWxsOiB3aGl0ZTsgZm9udC1mYW1pbHk6IHNlcmlmOyBmb250LXNpemU6IDE0cHg7IH08L3N0eWxlPjxyZWN0IHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIGZpbGw9ImJsYWNrIiAvPjx0ZXh0IHg9IjEwIiB5PSIyMCIgY2xhc3M9ImJhc2UiPkJhZGdlczogPC90ZXh0Pjx0ZXh0IHg9IjEwIiB5PSI0MCIgY2xhc3M9ImJhc2UiPjwvdGV4dD48dGV4dCB4PSIxMCIgeT0iNjAiIGNsYXNzPSJiYXNlIj5TZWUgTkZUIHJlbmRlcmVkIGluOiA8L3RleHQ+PHRleHQgeD0iMTAiIHk9IjgwIiBjbGFzcz0iYmFzZSI+aHR0cHM6Ly93ZWIzZGV2Lm5mdC5kb2dlLnVuaXZlcnNpdHk/dG9rZW5faWQ9MTMwNjQ5NTQ2NzwvdGV4dD48dGV4dCB4PSIxMCIgeT0iMTAwIiBjbGFzcz0iYmFzZSI+MTA8L3RleHQ+PHRleHQgeD0iMTAiIHk9IjEyMCIgY2xhc3M9ImJhc2UiPjg8L3RleHQ+PHRleHQgeD0iMTAiIHk9IjE0MCIgY2xhc3M9ImJhc2UiPjU8L3RleHQ+PHRleHQgeD0iMTAiIHk9IjE2MCIgY2xhc3M9ImJhc2UiPjU8L3RleHQ+PHRleHQgeD0iMTAiIHk9IjE4MCIgY2xhc3M9ImJhc2UiPjc8L3RleHQ+PHRleHQgeD0iMTAiIHk9IjIwMCIgY2xhc3M9ImJhc2UiPjM8L3RleHQ+PHRleHQgeD0iMTAiIHk9IjIyMCIgY2xhc3M9ImJhc2UiPjwvdGV4dD48L3N2Zz4="
+    name: "web3dev #1306495467"
+    owner: "0xAbbcD9A203f2Ca423777dFbb915cb3fC66dCe5B8"
    */
   return (
     <div>
