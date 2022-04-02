@@ -1,4 +1,4 @@
-import { List, Avatar } from "antd";
+import { List, Avatar, Button, Modal, Form } from "antd";
 import { useContractReader } from "eth-hooks";
 import { ethers } from "ethers";
 import { useEffect, useState } from "react";
@@ -19,21 +19,28 @@ function Home({ yourLocalBalance, readContracts }) {
   const purpose = useContractReader(readContracts, "Web3Dev", "purpose");
   const totalSupply = useContractReader(readContracts, "Web3Dev", "totalSupply");
   const [nfts, setNfts] = useState([]);
+  const [loading, setLoading] = useState(true);
   const blockExplorer = "https://moonbeam.moonscan.io/";
 
   const getNft = async (mintedNfts, i) => {
-    let id = await readContracts.Web3Dev.tokenByIndex(i);
-    let owner = await readContracts.Web3Dev.ownerOf(id);
-    let uri = await readContracts.Web3Dev.tokenURI(id);
-    // console.log(uri)//, atob(uri));
-    let nft = JSON.parse(atob(uri.split(',')[1]));
-    nft.owner = owner;
-    // console.log(nft);
-    mintedNfts.push(nft);
+    try {
+      let id = await readContracts.Web3Dev.tokenByIndex(i);
+      let owner = await readContracts.Web3Dev.ownerOf(id);
+      let uri = await readContracts.Web3Dev.tokenURI(id);
+      // console.log(uri)//, atob(uri));
+      let nft = JSON.parse(atob(uri.split(',')[1]));
+      nft.owner = owner;
+      // console.log(nft);
+      mintedNfts.push(nft);
+    } catch (e) {
+      console.log(e);
+    }
   }
 
   // TODO: add a cache to store the chain's nfts, no need to query every refresh
+  // TODO: show 3 nfts each row
   const getAllMintedNfts = async () => {
+    setLoading(true);
     let tot = totalSupply.toNumber();
     var tasks = [];
     var mintedNfts = [];
@@ -42,6 +49,7 @@ function Home({ yourLocalBalance, readContracts }) {
     }
     await Promise.all(tasks);
     setNfts(mintedNfts);
+    setLoading(false);
   };
 
   useEffect(() => {
@@ -62,6 +70,7 @@ function Home({ yourLocalBalance, readContracts }) {
         <List
           itemLayout="horizontal"
           dataSource={nfts}
+          loading={loading}
           renderItem={item => (
             <Item>
               <Item.Meta

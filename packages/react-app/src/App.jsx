@@ -287,7 +287,7 @@ function App(props) {
           {/* pass in any web3 props to this Home component. For example, yourLocalBalance */}
           <Home yourLocalBalance={yourLocalBalance} readContracts={readContracts} />
         </Route>
-        <Route>
+        <Route exact path="/query">
           <Query readContracts={readContracts} blockExplorer={blockExplorer} />
         </Route>
         <Route exact path="/debug">
