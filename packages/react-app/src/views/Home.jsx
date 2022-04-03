@@ -1,11 +1,9 @@
-import { List, Avatar, Button, Modal, Form } from "antd";
+import { List } from "antd";
 import { useContractReader } from "eth-hooks";
 import { ethers } from "ethers";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import Address from "../../src/components/Address";
-
-const Item = List.Item;
+import { Nft } from "../components";
 
 /**
  * web3 props can be passed from '../App.jsx' into your local view component for use
@@ -72,18 +70,7 @@ function Home({ yourLocalBalance, readContracts }) {
           dataSource={nfts}
           loading={loading}
           renderItem={item => (
-            <Item>
-              <Item.Meta
-                // avatar={<Avatar size="small" src={item.image} />}
-                title={
-                  <div>
-                  <a href={item.description}>{item.name + " owner: "}</a>
-                  <Address value={item.owner} blockExplorer={blockExplorer} />}
-                  </div>
-                }
-                description={<img src={item.image} width='200' height='200' />}
-              />
-            </Item>
+            <Nft nft={item} blockExplorer={blockExplorer} />
           )}
         />
       </div>
