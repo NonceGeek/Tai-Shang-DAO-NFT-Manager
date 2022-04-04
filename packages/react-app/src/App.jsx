@@ -288,7 +288,7 @@ function App(props) {
           <Home yourLocalBalance={yourLocalBalance} readContracts={readContracts} writeContracts={writeContracts} tx={tx}/>
         </Route>
         <Route exact path="/query">
-          <Query readContracts={readContracts} blockExplorer={blockExplorer} writeContracts={writeContracts} />
+          <Query readContracts={readContracts} blockExplorer={blockExplorer} writeContracts={writeContracts} tx={tx} />
         </Route>
         {/* <Route exact path="/debug">
           <Contract

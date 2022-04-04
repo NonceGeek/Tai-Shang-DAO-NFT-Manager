@@ -21,10 +21,9 @@ function Nft({ nft, blockExplorer, readContracts, writeContracts, tx }) {
   const [curNft, setCurNft] = useState(nft);
   const [loading, setLoading] = useState(false);
 
-  const parseTokenInfo = (tokenInfo) => {
-    if (tokenInfo === '') return;
+  const parseTokenInfo = (tokenInfo_) => {
     var badges_ = {};
-    const tokenInfoArr = tokenInfo.substr(1, tokenInfo.length - 2).split(', ');
+    const tokenInfoArr = tokenInfo_.substr(1, tokenInfo_.length - 2).split(', ');
     for (let i = 0; i < tokenInfoArr.length; i++) {
       var badgeName = tokenInfoArr[i].split(' * ')[0];
       badgeName = badgeName.substr(1, badgeName.length - 2);
@@ -65,7 +64,8 @@ function Nft({ nft, blockExplorer, readContracts, writeContracts, tx }) {
   }
 
   const getNft = async () => {
-    let uri = await readContracts.Web3Dev.tokenURI(curNft.tokenId);
+    if (!curNft) return;
+    let uri = await readContracts.Web3Dev.tokenURI(curNft.tokenId.toString());
     // console.log(uri)//, atob(uri));
     let nft_ = JSON.parse(atob(uri.split(',')[1]));
     setCurNft(curNft => {
@@ -84,7 +84,11 @@ function Nft({ nft, blockExplorer, readContracts, writeContracts, tx }) {
   }
 
   const confirmBadges = async () => {
-    if (tokenInfo === '') return;
+    if (tokenInfo === curNft.tokenInfo) {
+      setEdit(false);
+      return;
+    }
+    console.log('confirmBadges', curNft);
     setLoading(true);
     try {
       const result = tx(writeContracts.Web3Dev.setTokenInfo(curNft.tokenId, tokenInfo), update => {
@@ -94,7 +98,6 @@ function Nft({ nft, blockExplorer, readContracts, writeContracts, tx }) {
           setTokenInfo(curNft.tokenInfo);
           parseTokenInfo(curNft.tokenInfo);
           notify('Success!', 'set badges of nft ' + curNft.tokenId.toString() + ' success', <SmileOutlined style={{ color: '#108ee9' }} />);
-          getNft();
         } else {
           notify('Failed!', 'set badges of nft ' + curNft.tokenId.toString() + ' failed', <ExclamationCircleOutlined style={{ color: '#ee1111'}} />);
         }
@@ -104,6 +107,7 @@ function Nft({ nft, blockExplorer, readContracts, writeContracts, tx }) {
       console.log('error: ', e);
       notify('Failed!', 'set badges of nft ' + curNft.tokenId.toString() + ' failed', <ExclamationCircleOutlined style={{ color: '#ee1111'}} />);
     }
+    getNft();
     setLoading(false);
   }
 

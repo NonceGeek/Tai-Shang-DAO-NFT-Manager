@@ -1,11 +1,11 @@
-import { Input, Button, List } from "antd";
+import { Input, Button, List, InputNumber  } from "antd";
 import { useState } from "react";
 import { Nft } from "../components";
-import Address from "../components/Address";
+import { BigNumber } from "@ethersproject/bignumber";
 
 const Item = List.Item;
 
-function Query({ readContracts, blockExplorer, writeContracts }) {
+function Query({ readContracts, blockExplorer, writeContracts, tx }) {
   const [nfts, setNfts] = useState([])
   const [tokenId, setTokenId] = useState(null);
   const [owner, setOwner] = useState(null);
@@ -20,7 +20,7 @@ function Query({ readContracts, blockExplorer, writeContracts }) {
       let uri = await readContracts.Web3Dev.tokenURI(tokenId);
       let nft = JSON.parse(atob(uri.split(',')[1]));
       nft.owner = owner_;
-      nft.tokneId = tokenId;
+      nft.tokenId = tokenId;
       let tokenInfo = await readContracts.Web3Dev.getTokenInfo(tokenId);
       nft.tokenInfo = tokenInfo;
       setNfts([nft]);
@@ -58,7 +58,7 @@ function Query({ readContracts, blockExplorer, writeContracts }) {
   }
 
   const handleTokenIdChange = (evt) => {
-    setTokenId(evt.target.value);
+    setTokenId(BigNumber.from(evt));
   }
 
   const handleOwnerChange = (evt) => {
@@ -67,7 +67,7 @@ function Query({ readContracts, blockExplorer, writeContracts }) {
 
   return (
     <div>
-      <Input placeholder="input tokenid(uint256)" onChange={handleTokenIdChange} style={{margin: '3ex', width: '60%'}} />
+      <InputNumber placeholder="input tokenid(uint256)" onChange={handleTokenIdChange} style={{margin: '3ex', width: '60%'}} />
       <Button type="primary" onClick={() => queryNftByTokenId()}>query</Button>
       <Input placeholder="input owner(address)" onChange={handleOwnerChange} style={{margin: '3ex', width: '60%'}} />
       <Button type="primary" onClick={() => queryNftsByOwner()}>query</Button>
@@ -80,7 +80,7 @@ function Query({ readContracts, blockExplorer, writeContracts }) {
               itemLayout="horizontal"
               dataSource={nfts}
               renderItem={item => (
-                <Nft nft={item} blockExplorer={blockExplorer} writeContracts={writeContracts} />
+                <Nft nft={item} blockExplorer={blockExplorer} readContracts={readContracts} writeContracts={writeContracts} tx={tx} />
               )}
             />
           </div>
