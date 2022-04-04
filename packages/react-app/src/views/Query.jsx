@@ -13,6 +13,7 @@ function Query({ readContracts, blockExplorer, writeContracts }) {
 
   const queryNftByTokenId = async () => {
     if (!tokenId) return;
+    setNfts([]);
     setLoading(true);
     try {
       let owner_ = await readContracts.Web3Dev.ownerOf(tokenId);
@@ -32,6 +33,7 @@ function Query({ readContracts, blockExplorer, writeContracts }) {
 
   const queryNftsByOwner = async () => {
     if (!owner) return;
+    setNfts([]);
     setLoading(true);
     var nfts_ = []
     try {

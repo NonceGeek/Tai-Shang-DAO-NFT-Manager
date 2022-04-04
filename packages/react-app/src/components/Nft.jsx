@@ -1,4 +1,5 @@
-import { Button, Modal, List, Form, Space, Card, Dropdown, Menu } from 'antd';
+import { SmileOutlined, ExclamationCircleOutlined } from '@ant-design/icons';
+import { Button, Modal, List, Form, Space, Card, Dropdown, Menu, notification } from 'antd';
 import { useEffect, useState } from 'react';
 import Address from './Address';
 const Item = List.Item;
@@ -12,13 +13,15 @@ const { Meta } = Card;
   tokenId: "1306495467(BigNumber)"
   tokenInfo: "[\"noncegeeker\", \"buidler\" * 3, \"writer\" * 2]"
   */
-function Nft({ nft, blockExplorer, writeContracts}) {
+function Nft({ nft, blockExplorer, readContracts, writeContracts, tx }) {
   const badgeNames = ['noncegeeker', 'learner', 'workshoper', 'partner', 'buidler', 'writer', 'camper', 'puzzler'];
   const [edit, setEdit] = useState(false);
   const [badges, setBadges] = useState({});
   const [tokenInfo, setTokenInfo] = useState('');
+  const [curNft, setCurNft] = useState(nft);
+  const [loading, setLoading] = useState(false);
 
-  const parseTokenInfo = () => {
+  const parseTokenInfo = (tokenInfo) => {
     if (tokenInfo === '') return;
     var badges_ = {};
     const tokenInfoArr = tokenInfo.substr(1, tokenInfo.length - 2).split(', ');
@@ -35,7 +38,7 @@ function Nft({ nft, blockExplorer, writeContracts}) {
   }
 
   const formatTokenInfo = () => {
-    if (Object.keys(badges).length === 0) return;
+    // if (Object.keys(badges).length === 0) return;
     var tokenInfo_ = '[';
     for (let badgeName in badges) {
       if (badges[badgeName] === '1') {
@@ -44,7 +47,8 @@ function Nft({ nft, blockExplorer, writeContracts}) {
         tokenInfo_ += `"${badgeName} * ${badges[badgeName]}", `;
       }
     }
-    tokenInfo_ = tokenInfo_.substr(0, tokenInfo_.length - 2) + ']';
+    if (tokenInfo_.length > 2) tokenInfo_ = tokenInfo_.substr(0, tokenInfo_.length - 2) + ']';
+    else tokenInfo_ = '';
     setTokenInfo(tokenInfo_);
   }
 
@@ -53,19 +57,59 @@ function Nft({ nft, blockExplorer, writeContracts}) {
     setEdit(true);
   }
 
-  const addBadges = async () => {
+  const cancelBadges = () => {
+    setEdit(false);
+    setTokenInfo(curNft.tokenInfo);
+    parseTokenInfo(curNft.tokenInfo);
   }
 
-  const removeBadges = () => {
+  const getNft = async () => {
+    let uri = await readContracts.Web3Dev.tokenURI(curNft.tokenId);
+    // console.log(uri)//, atob(uri));
+    let nft_ = JSON.parse(atob(uri.split(',')[1]));
+    setCurNft(curNft => {
+      curNft.image = nft_.image;
+      curNft.tokenInfo = nft_.tokenInfo;
+      return curNft;
+    });
   }
 
-  const confirmBadges = () => {
+  const notify = (message, description, icon) => {
+    notification.open({
+      message: message,
+      description: description,
+      icon: icon,
+    });
+  }
+
+  const confirmBadges = async () => {
+    if (tokenInfo === '') return;
+    setLoading(true);
+    try {
+      const result = tx(writeContracts.Web3Dev.setTokenInfo(curNft.tokenId, tokenInfo), update => {
+        setEdit(false);
+        if (update && (update.status === 'confirmed' || update.status === 1)) {
+          // console.log('set badges of nft ' + curNft.tokenId.toString() + ' success');
+          setTokenInfo(curNft.tokenInfo);
+          parseTokenInfo(curNft.tokenInfo);
+          notify('Success!', 'set badges of nft ' + curNft.tokenId.toString() + ' success', <SmileOutlined style={{ color: '#108ee9' }} />);
+        } else {
+          notify('Failed!', 'set badges of nft ' + curNft.tokenId.toString() + ' failed', <ExclamationCircleOutlined style={{ color: '#ee1111'}} />);
+        }
+      });
+      await result;
+    } catch (e) {
+      console.log('error: ', e);
+      notify('Failed!', 'set badges of nft ' + curNft.tokenId.toString() + ' failed', <ExclamationCircleOutlined style={{ color: '#ee1111'}} />);
+    }
+    setLoading(false);
   }
 
   useEffect(() => {
     if (!nft) return;
+    setCurNft(nft);
     setTokenInfo(nft.tokenInfo);
-    parseTokenInfo();
+    parseTokenInfo(nft.tokenInfo);
   }, [nft]);
 
   const addBadgesMenu = (
@@ -115,7 +159,7 @@ function Nft({ nft, blockExplorer, writeContracts}) {
                 });
                 formatTokenInfo();
               }}>
-                {badgeName}
+                {badgeName.substr(1, badgeName.length - 2)}
               </Button>
             </Menu.Item>
           );
@@ -128,25 +172,25 @@ function Nft({ nft, blockExplorer, writeContracts}) {
     <div>
       <Item onClick={handleBadges}>
         <Item.Meta
-          // avatar={<Avatar size="small" src={nft.image} />}
+          // avatar={<Avatar size="small" src={curNft.image} />}
           title={
             <div>
-            <a href={nft.description}>{nft.name + " owner: "}</a>
-            <Address value={nft.owner} blockExplorer={blockExplorer} />}
+            <a href={curNft.description}>{curNft.name + " owner: "}</a>
+            <Address value={curNft.owner} blockExplorer={blockExplorer} />}
             </div>
           }
-          description={<img src={nft.image} width='200' height='200' />}
+          description={<img src={curNft.image} width='200' height='200' />}
         />
       </Item>
       {/* <Card
         // hoverable
         // style={{ width: 240 }}
-        cover={<img src={nft.image} width='200' height='200' />}
+        cover={<img src={curNft.image} width='200' height='200' />}
       >
         <Meta
           title={<div>
-            <a href={nft.description}>{nft.name + "owner: "}</a>
-            <Address value={nft.owner} blockExplorer={blockExplorer} />
+            <a href={curNft.description}>{curNft.name + "owner: "}</a>
+            <Address value={curNft.owner} blockExplorer={blockExplorer} />
           </div>}
           // description=
         />
@@ -154,9 +198,10 @@ function Nft({ nft, blockExplorer, writeContracts}) {
       <Modal
         title="Badges"
         visible={edit}
-        onCancel={() => setEdit(false)}
+        onCancel={cancelBadges}
         onOk={confirmBadges}
         destroyOnClose={true}
+        loading={loading}
       >
         <Dropdown
           overlay={addBadgesMenu}

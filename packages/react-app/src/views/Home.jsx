@@ -11,7 +11,7 @@ import { Nft } from "../components";
  * @param {*} readContracts contracts from current chain already pre-loaded using ethers contract module. More here https://docs.ethers.io/v5/api/contract/contract/
  * @returns react component
  **/
-function Home({ yourLocalBalance, readContracts, writeContracts }) {
+function Home({ yourLocalBalance, readContracts, writeContracts, tx }) {
   // you can also use hooks locally in your component of choice
   // in this case, let's keep track of 'purpose' variable from our contract
   const purpose = useContractReader(readContracts, "Web3Dev", "purpose");
@@ -67,16 +67,16 @@ function Home({ yourLocalBalance, readContracts, writeContracts }) {
           dataSource={nfts}
           loading={loading}
           renderItem={item => (
-            <Nft nft={item} blockExplorer={blockExplorer} writeContracts={writeContracts} />
+            <Nft nft={item} blockExplorer={blockExplorer} readContracts={readContracts} writeContracts={writeContracts} tx={tx} />
           )}
         />
       </div>
-      <div style={{ margin: 32 }}>
+      {/* <div style={{ margin: 32 }}>
         <span style={{ marginRight: 8 }}>📝</span>
         This Is Your App Home. You can start editing it in{" "}
         <span
           className="highlight"
-          style={{ marginLeft: 4, /* backgroundColor: "#f9f9f9", */ padding: 4, borderRadius: 4, fontWeight: "bolder" }}
+          style={{ marginLeft: 4, padding: 4, borderRadius: 4, fontWeight: "bolder" }}
         >
           packages/react-app/src/views/Home.jsx
         </span>
@@ -86,14 +86,14 @@ function Home({ yourLocalBalance, readContracts, writeContracts }) {
         Edit your smart contract{" "}
         <span
           className="highlight"
-          style={{ marginLeft: 4, /* backgroundColor: "#f9f9f9", */ padding: 4, borderRadius: 4, fontWeight: "bolder" }}
+          style={{ marginLeft: 4, padding: 4, borderRadius: 4, fontWeight: "bolder" }}
         >
           YourContract.sol
         </span>{" "}
         in{" "}
         <span
           className="highlight"
-          style={{ marginLeft: 4, /* backgroundColor: "#f9f9f9", */ padding: 4, borderRadius: 4, fontWeight: "bolder" }}
+          style={{ marginLeft: 4, padding: 4, borderRadius: 4, fontWeight: "bolder" }}
         >
           packages/hardhat/contracts
         </span>
@@ -106,7 +106,7 @@ function Home({ yourLocalBalance, readContracts, writeContracts }) {
             className="highlight"
             style={{
               marginLeft: 4,
-              /* backgroundColor: "#f9f9f9", */ padding: 4,
+              padding: 4,
               borderRadius: 4,
               fontWeight: "bolder",
             }}
@@ -118,7 +118,7 @@ function Home({ yourLocalBalance, readContracts, writeContracts }) {
             className="highlight"
             style={{
               marginLeft: 4,
-              /* backgroundColor: "#f9f9f9", */ padding: 4,
+              padding: 4,
               borderRadius: 4,
               fontWeight: "bolder",
             }}
@@ -135,7 +135,7 @@ function Home({ yourLocalBalance, readContracts, writeContracts }) {
             className="highlight"
             style={{
               marginLeft: 4,
-              /* backgroundColor: "#f9f9f9", */ padding: 4,
+              padding: 4,
               borderRadius: 4,
               fontWeight: "bolder",
             }}
@@ -143,23 +143,23 @@ function Home({ yourLocalBalance, readContracts, writeContracts }) {
             {purpose}
           </span>
         </div>
-      )}
+      )} */}
 
-      <div style={{ margin: 32 }}>
+      {/* <div style={{ margin: 32 }}>
         <span style={{ marginRight: 8 }}>🤖</span>
         An example prop of your balance{" "}
         <span style={{ fontWeight: "bold", color: "green" }}>({ethers.utils.formatEther(yourLocalBalance)})</span> was
         passed into the
         <span
           className="highlight"
-          style={{ marginLeft: 4, /* backgroundColor: "#f9f9f9", */ padding: 4, borderRadius: 4, fontWeight: "bolder" }}
+          style={{ marginLeft: 4, padding: 4, borderRadius: 4, fontWeight: "bolder" }}
         >
           Home.jsx
         </span>{" "}
         component from
         <span
           className="highlight"
-          style={{ marginLeft: 4, /* backgroundColor: "#f9f9f9", */ padding: 4, borderRadius: 4, fontWeight: "bolder" }}
+          style={{ marginLeft: 4, padding: 4, borderRadius: 4, fontWeight: "bolder" }}
         >
           App.jsx
         </span>
@@ -171,7 +171,7 @@ function Home({ yourLocalBalance, readContracts, writeContracts }) {
       <div style={{ margin: 32 }}>
         <span style={{ marginRight: 8 }}>🛠</span>
         Tinker with your smart contract using the <Link to="/debug">"Debug Contract"</Link> tab.
-      </div>
+      </div> */}
     </div>
   );
 }

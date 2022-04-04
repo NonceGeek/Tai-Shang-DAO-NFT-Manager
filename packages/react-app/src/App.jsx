@@ -265,7 +265,7 @@ function App(props) {
         <Menu.Item key="/query">
           <Link to="/query">Query Nft</Link>
         </Menu.Item>
-        <Menu.Item key="/debug">
+        {/* <Menu.Item key="/debug">
           <Link to="/debug">Debug Contracts</Link>
         </Menu.Item>
         <Menu.Item key="/hints">
@@ -279,24 +279,18 @@ function App(props) {
         </Menu.Item>
         <Menu.Item key="/subgraph">
           <Link to="/subgraph">Subgraph</Link>
-        </Menu.Item>
+        </Menu.Item> */}
       </Menu>
 
       <Switch>
         <Route exact path="/">
           {/* pass in any web3 props to this Home component. For example, yourLocalBalance */}
-          <Home yourLocalBalance={yourLocalBalance} readContracts={readContracts} writeContracts={writeContracts} />
+          <Home yourLocalBalance={yourLocalBalance} readContracts={readContracts} writeContracts={writeContracts} tx={tx}/>
         </Route>
         <Route exact path="/query">
           <Query readContracts={readContracts} blockExplorer={blockExplorer} writeContracts={writeContracts} />
         </Route>
-        <Route exact path="/debug">
-          {/*
-                🎛 this scaffolding is full of commonly used components
-                this <Contract/> component will automatically parse your ABI
-                and give you a form to interact with it locally
-            */}
-
+        {/* <Route exact path="/debug">
           <Contract
             name="Web3Dev"
             price={price}
@@ -328,8 +322,8 @@ function App(props) {
             readContracts={readContracts}
             purpose={purpose}
           />
-        </Route>
-        <Route path="/mainnetdai">
+        </Route> */}
+        {/* <Route path="/mainnetdai">
           <Contract
             name="DAI"
             customContract={mainnetContracts && mainnetContracts.contracts && mainnetContracts.contracts.DAI}
@@ -339,7 +333,7 @@ function App(props) {
             blockExplorer="https://etherscan.io/"
             contractConfig={contractConfig}
             chainId={1}
-          />
+          /> */}
           {/*
             <Contract
               name="UNI"
@@ -349,8 +343,8 @@ function App(props) {
               address={address}
               blockExplorer="https://etherscan.io/"
             />
-            */}
-        </Route>
+          */}
+        {/* </Route>
         <Route path="/subgraph">
           <Subgraph
             subgraphUri={props.subgraphUri}
@@ -358,7 +352,7 @@ function App(props) {
             writeContracts={writeContracts}
             mainnetProvider={mainnetProvider}
           />
-        </Route>
+        </Route> */}
       </Switch>
 
       <ThemeSwitch />
