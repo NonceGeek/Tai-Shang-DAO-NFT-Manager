@@ -1,10 +1,11 @@
 import { Input, Button, List } from "antd";
 import { useState } from "react";
+import { Nft } from "../components";
 import Address from "../components/Address";
 
 const Item = List.Item;
 
-function Query({ readContracts, blockExplorer }) {
+function Query({ readContracts, blockExplorer, writeContracts }) {
   const [nfts, setNfts] = useState([])
   const [tokenId, setTokenId] = useState(null);
   const [owner, setOwner] = useState(null);
@@ -18,6 +19,9 @@ function Query({ readContracts, blockExplorer }) {
       let uri = await readContracts.Web3Dev.tokenURI(tokenId);
       let nft = JSON.parse(atob(uri.split(',')[1]));
       nft.owner = owner_;
+      nft.tokneId = tokenId;
+      let tokenInfo = await readContracts.Web3Dev.getTokenInfo(tokenId);
+      nft.tokenInfo = tokenInfo;
       setNfts([nft]);
     } catch (e) {
       console.log(e);
@@ -37,6 +41,9 @@ function Query({ readContracts, blockExplorer }) {
         let uri = await readContracts.Web3Dev.tokenURI(id);
         let nft = JSON.parse(atob(uri.split(',')[1]));
         nft.owner = owner;
+        nft.tokenId = id;
+        let tokenInfo = await readContracts.Web3Dev.getTokenInfo(id);
+        nft.tokenInfo = tokenInfo;
         // setNfts(nfts => [...nfts, nft]);
         nfts_.push(nft);
       }
@@ -71,18 +78,7 @@ function Query({ readContracts, blockExplorer }) {
               itemLayout="horizontal"
               dataSource={nfts}
               renderItem={item => (
-                <Item>
-                  <Item.Meta
-                    // avatar={<Avatar size="small" src={item.image} />}
-                    title={
-                      <div>
-                      <a href={item.description}>{item.name + " owner: "}</a>
-                      <Address value={item.owner} blockExplorer={blockExplorer} />}
-                      </div>
-                    }
-                    description={<img src={item.image} width='200' height='200' />}
-                  />
-                </Item>
+                <Nft nft={item} blockExplorer={blockExplorer} writeContracts={writeContracts} />
               )}
             />
           </div>
