@@ -265,10 +265,10 @@ function App(props) {
         <Menu.Item key="/query">
           <Link to="/query">Query Nft</Link>
         </Menu.Item>
-        {/* <Menu.Item key="/debug">
+        <Menu.Item key="/debug">
           <Link to="/debug">Debug Contracts</Link>
         </Menu.Item>
-        <Menu.Item key="/hints">
+        {/* <Menu.Item key="/hints">
           <Link to="/hints">Hints</Link>
         </Menu.Item>
         <Menu.Item key="/exampleui">
@@ -290,7 +290,7 @@ function App(props) {
         <Route exact path="/query">
           <Query readContracts={readContracts} blockExplorer={blockExplorer} writeContracts={writeContracts} tx={tx} />
         </Route>
-        {/* <Route exact path="/debug">
+        <Route exact path="/debug">
           <Contract
             name="Web3Dev"
             price={price}
@@ -301,7 +301,7 @@ function App(props) {
             contractConfig={contractConfig}
           />
         </Route>
-        <Route path="/hints">
+        {/* <Route path="/hints">
           <Hints
             address={address}
             yourLocalBalance={yourLocalBalance}
