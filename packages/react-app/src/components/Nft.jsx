@@ -26,7 +26,8 @@ function Nft({ nft, blockExplorer, readContracts, writeContracts, tx }) {
     var badges_ = {};
     const tokenInfoArr = tokenInfo.substr(1, tokenInfo.length - 2).split(', ');
     for (let i = 0; i < tokenInfoArr.length; i++) {
-      const badgeName = tokenInfoArr[i].split(' * ')[0];
+      var badgeName = tokenInfoArr[i].split(' * ')[0];
+      badgeName = badgeName.substr(1, badgeName.length - 2);
       var badgeCount = '1';
       if (tokenInfoArr[i].split(' * ').length === 2) {
         badgeCount = tokenInfoArr[i].split(' * ')[1];
@@ -93,6 +94,7 @@ function Nft({ nft, blockExplorer, readContracts, writeContracts, tx }) {
           setTokenInfo(curNft.tokenInfo);
           parseTokenInfo(curNft.tokenInfo);
           notify('Success!', 'set badges of nft ' + curNft.tokenId.toString() + ' success', <SmileOutlined style={{ color: '#108ee9' }} />);
+          getNft();
         } else {
           notify('Failed!', 'set badges of nft ' + curNft.tokenId.toString() + ' failed', <ExclamationCircleOutlined style={{ color: '#ee1111'}} />);
         }
@@ -159,7 +161,7 @@ function Nft({ nft, blockExplorer, readContracts, writeContracts, tx }) {
                 });
                 formatTokenInfo();
               }}>
-                {badgeName.substr(1, badgeName.length - 2)}
+                {badgeName}
               </Button>
             </Menu.Item>
           );
