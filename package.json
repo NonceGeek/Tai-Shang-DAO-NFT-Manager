@@ -69,6 +69,7 @@
   },
   "dependencies": {},
   "devDependencies": {
-    "husky": "^7.0.2"
+    "husky": "^7.0.2",
+    "prettier": "^2.6.2"
   }
 }

@@ -3,8 +3,6 @@ import { useState } from "react";
 import { Nft } from "../components";
 import { BigNumber } from "@ethersproject/bignumber";
 
-const Item = List.Item;
-
 function Query({ readContracts, blockExplorer, writeContracts, tx }) {
   const [nfts, setNfts] = useState([])
   const [tokenId, setTokenId] = useState(null);
