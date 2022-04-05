@@ -98,7 +98,7 @@ function Nft({ nft, blockExplorer, readContracts, writeContracts, tx }) {
       console.log('error: ', e);
       notify('Failed!', 'set badges of nft ' + curNft.tokenId.toString() + ' failed', <ExclamationCircleOutlined style={{ color: '#ee1111'}} />);
     }
-    getNft();
+    getNft(); // refresh nft info
     setLoading(false);
   }
 
