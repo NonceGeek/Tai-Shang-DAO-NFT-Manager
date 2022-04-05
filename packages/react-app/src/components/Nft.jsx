@@ -22,6 +22,10 @@ function Nft({ nft, blockExplorer, readContracts, writeContracts, tx }) {
   const [loading, setLoading] = useState(false);
 
   const parseTokenInfo = (tokenInfo_) => {
+    if (tokenInfo_ === '') {
+      setBadges({});
+      return;
+    }
     var badges_ = {};
     const tokenInfoArr = tokenInfo_.substr(1, tokenInfo_.length - 2).split(', ');
     for (let i = 0; i < tokenInfoArr.length; i++) {
@@ -176,7 +180,7 @@ function Nft({ nft, blockExplorer, readContracts, writeContracts, tx }) {
 
   return (
     <div>
-      <Item onClick={handleBadges}>
+      <Item>
         <Item.Meta
           // avatar={<Avatar size="small" src={curNft.image} />}
           title={
@@ -185,7 +189,7 @@ function Nft({ nft, blockExplorer, readContracts, writeContracts, tx }) {
             <Address value={curNft.owner} blockExplorer={blockExplorer} />}
             </div>
           }
-          description={<img src={curNft.image} width='200' height='200' />}
+          description={<img src={curNft.image} width='200' height='200' onClick={handleBadges} />}
         />
       </Item>
       {/* <Card
