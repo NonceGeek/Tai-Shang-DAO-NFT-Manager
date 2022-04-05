@@ -15,7 +15,7 @@ function Home({ readContracts, writeContracts, tx }) {
       let owner = await readContracts.Web3Dev.ownerOf(id);
       let uri = await readContracts.Web3Dev.tokenURI(id);
       // console.log(uri)//, atob(uri));
-      let nft = JSON.parse(atob(uri.split(',')[1]));
+      let nft = JSON.parse(atob(uri.split(",")[1]));
       nft.owner = owner;
       nft.tokenId = id;
       let tokenInfo = await readContracts.Web3Dev.getTokenInfo(id);
@@ -25,7 +25,7 @@ function Home({ readContracts, writeContracts, tx }) {
     } catch (e) {
       console.log(e);
     }
-  }
+  };
 
   // TODO: add a cache to store the chain's nfts, no need to query every refresh
   // TODO: show 3 nfts each row
@@ -56,7 +56,13 @@ function Home({ readContracts, writeContracts, tx }) {
           dataSource={nfts}
           loading={loading}
           renderItem={item => (
-            <Nft nft={item} blockExplorer={blockExplorer} readContracts={readContracts} writeContracts={writeContracts} tx={tx} />
+            <Nft
+              nft={item}
+              blockExplorer={blockExplorer}
+              readContracts={readContracts}
+              writeContracts={writeContracts}
+              tx={tx}
+            />
           )}
         />
       </div>
