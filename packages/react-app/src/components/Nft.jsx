@@ -186,7 +186,7 @@ function Nft({ nft, blockExplorer, readContracts, writeContracts, tx }) {
           title={
             <div>
               <a href={curNft.description}>{curNft.name + " owner: "}</a>
-              <Address value={curNft.owner} blockExplorer={blockExplorer} />}
+              <Address value={curNft.owner} blockExplorer={blockExplorer} />
             </div>
           }
           description={<img src={curNft.image} width="200" height="200" onClick={handleBadges} />}
