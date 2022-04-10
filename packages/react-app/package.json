@@ -40,6 +40,7 @@
     "eth-hooks": "2.3.16",
     "ethers": "^5.4.1",
     "fortmatic": "^2.2.1",
+    "gh-pages": "^3.2.3",
     "graphiql": "^1.4.7",
     "graphql": "^15.3.0",
     "ipfs-http-client": "^55.0.0",
@@ -98,6 +99,7 @@
     "ship": "yarn surge",
     "theme": "npx gulp less",
     "watch": "node ./scripts/watch.js",
-    "prettier": "npx prettier --write . '!(node_module|build)/**/*'"
+    "prettier": "npx prettier --write . '!(node_module|build)/**/*'",
+    "deploy": "gh-pages -d build"
   }
 }

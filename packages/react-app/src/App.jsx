@@ -259,14 +259,14 @@ function App(props) {
         USE_NETWORK_SELECTOR={USE_NETWORK_SELECTOR}
       />
       <Menu style={{ textAlign: "center", marginTop: 40 }} selectedKeys={[location.pathname]} mode="horizontal">
-        <Menu.Item key="/">
-          <Link to="/">App Home</Link>
+        <Menu.Item key="/Tai-Shang-DAO-NFT-Manager/">
+          <Link to="/Tai-Shang-DAO-NFT-Manager/">App Home</Link>
         </Menu.Item>
-        <Menu.Item key="/query">
-          <Link to="/query">Query Nft</Link>
+        <Menu.Item key="/Tai-Shang-DAO-NFT-Manager/query">
+          <Link to="/Tai-Shang-DAO-NFT-Manager/query">Query Nft</Link>
         </Menu.Item>
         <Menu.Item key="/debug">
-          <Link to="/debug">Debug Contracts</Link>
+          <Link to="/Tai-Shang-DAO-NFT-Manager/debug">Debug Contracts</Link>
         </Menu.Item>
         {/* <Menu.Item key="/hints">
           <Link to="/hints">Hints</Link>
@@ -283,14 +283,14 @@ function App(props) {
       </Menu>
 
       <Switch>
-        <Route exact path="/">
+        <Route exact path="/Tai-Shang-DAO-NFT-Manager/">
           {/* pass in any web3 props to this Home component. For example, yourLocalBalance */}
           <Home readContracts={readContracts} writeContracts={writeContracts} tx={tx} />
         </Route>
-        <Route exact path="/query">
+        <Route exact path="/Tai-Shang-DAO-NFT-Manager/query">
           <Query readContracts={readContracts} blockExplorer={blockExplorer} writeContracts={writeContracts} tx={tx} />
         </Route>
-        <Route exact path="/debug">
+        <Route exact path="/Tai-Shang-DAO-NFT-Manager/debug">
           <Contract
             name="Web3Dev"
             price={price}
