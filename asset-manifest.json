@@ -1,0 +1,23 @@
+{
+  "files": {
+    "main.css": "/Tai-Shang-DAO-NFT-Manager/static/css/main.8a404a9e.chunk.css",
+    "main.js": "/Tai-Shang-DAO-NFT-Manager/static/js/main.9cfb9bdd.chunk.js",
+    "main.js.map": "/Tai-Shang-DAO-NFT-Manager/static/js/main.9cfb9bdd.chunk.js.map",
+    "runtime-main.js": "/Tai-Shang-DAO-NFT-Manager/static/js/runtime-main.3b6808b8.js",
+    "runtime-main.js.map": "/Tai-Shang-DAO-NFT-Manager/static/js/runtime-main.3b6808b8.js.map",
+    "static/css/2.0dcad14b.chunk.css": "/Tai-Shang-DAO-NFT-Manager/static/css/2.0dcad14b.chunk.css",
+    "static/js/2.60dbcb71.chunk.js": "/Tai-Shang-DAO-NFT-Manager/static/js/2.60dbcb71.chunk.js",
+    "static/js/2.60dbcb71.chunk.js.map": "/Tai-Shang-DAO-NFT-Manager/static/js/2.60dbcb71.chunk.js.map",
+    "index.html": "/Tai-Shang-DAO-NFT-Manager/index.html",
+    "static/css/2.0dcad14b.chunk.css.map": "/Tai-Shang-DAO-NFT-Manager/static/css/2.0dcad14b.chunk.css.map",
+    "static/css/main.8a404a9e.chunk.css.map": "/Tai-Shang-DAO-NFT-Manager/static/css/main.8a404a9e.chunk.css.map",
+    "static/js/2.60dbcb71.chunk.js.LICENSE.txt": "/Tai-Shang-DAO-NFT-Manager/static/js/2.60dbcb71.chunk.js.LICENSE.txt"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.3b6808b8.js",
+    "static/css/2.0dcad14b.chunk.css",
+    "static/js/2.60dbcb71.chunk.js",
+    "static/css/main.8a404a9e.chunk.css",
+    "static/js/main.9cfb9bdd.chunk.js"
+  ]
+}
