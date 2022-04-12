@@ -13,7 +13,7 @@ function Nft({ nft, blockExplorer, readContracts, writeContracts, tx }) {
   const [loading, setLoading] = useState(false);
 
   const parseTokenInfo = tokenInfo_ => {
-    if (tokenInfo_ === "") {
+    if (!tokenInfo_ || tokenInfo_ === "") {
       setBadges({});
       return;
     }
@@ -21,7 +21,8 @@ function Nft({ nft, blockExplorer, readContracts, writeContracts, tx }) {
     const tokenInfoArr = tokenInfo_.substr(1, tokenInfo_.length - 2).split(", ");
     for (let i = 0; i < tokenInfoArr.length; i++) {
       var badgeName = tokenInfoArr[i].split(" * ")[0];
-      badgeName = badgeName.substr(1, badgeName.length - 2);
+      if (badgeName[0] === '"') badgeName = badgeName.substr(1, badgeName.length - 1);
+      if (badgeName[badgeName.length - 1] === '"') badgeName = badgeName.substr(0, badgeName.length - 1);
       var badgeCount = "1";
       if (tokenInfoArr[i].split(" * ").length === 2) {
         badgeCount = tokenInfoArr[i].split(" * ")[1];
@@ -32,6 +33,7 @@ function Nft({ nft, blockExplorer, readContracts, writeContracts, tx }) {
   };
 
   const formatTokenInfo = () => {
+    console.log("formatTokenInfo", badges);
     var tokenInfo_ = "[";
     for (let badgeName in badges) {
       if (badges[badgeName] === "1") {
@@ -60,11 +62,9 @@ function Nft({ nft, blockExplorer, readContracts, writeContracts, tx }) {
     if (!curNft) return;
     let uri = await readContracts.Web3Dev.tokenURI(curNft.tokenId.toString());
     let nft_ = JSON.parse(atob(uri.split(",")[1]));
-    setCurNft(curNft => {
-      curNft.image = nft_.image;
-      curNft.tokenInfo = nft_.tokenInfo;
-      return curNft;
-    });
+    console.log("getNft", curNft, nft_);
+    let tokenInfo_ = await readContracts.Web3Dev.getTokenInfo(curNft.tokenId);
+    setCurNft({ ...curNft, image: nft_.image, tokenInfo: tokenInfo_ });
   };
 
   const notify = (message, description, icon) => {
@@ -86,18 +86,10 @@ function Nft({ nft, blockExplorer, readContracts, writeContracts, tx }) {
       const result = tx(writeContracts.Web3Dev.setTokenInfo(curNft.tokenId, tokenInfo), update => {
         setEdit(false);
         if (update && (update.status === "confirmed" || update.status === 1)) {
-          setTokenInfo(curNft.tokenInfo);
-          parseTokenInfo(curNft.tokenInfo);
           notify(
             "Success!",
             "set badges of nft " + curNft.tokenId.toString() + " success",
             <SmileOutlined style={{ color: "#108ee9" }} />,
-          );
-        } else {
-          notify(
-            "Failed!",
-            "set badges of nft " + curNft.tokenId.toString() + " failed",
-            <ExclamationCircleOutlined style={{ color: "#ee1111" }} />,
           );
         }
       });
@@ -110,16 +102,21 @@ function Nft({ nft, blockExplorer, readContracts, writeContracts, tx }) {
         <ExclamationCircleOutlined style={{ color: "#ee1111" }} />,
       );
     }
-    getNft(); // refresh nft info
+    await getNft(); // refresh nft info
     setLoading(false);
   };
 
   useEffect(() => {
     if (!nft) return;
     setCurNft(nft);
-    setTokenInfo(nft.tokenInfo);
-    parseTokenInfo(nft.tokenInfo);
   }, [nft]);
+
+  useEffect(() => {
+    if (!curNft) return;
+    console.log("useEffect curNft", curNft);
+    setTokenInfo(curNft.tokenInfo);
+    parseTokenInfo(curNft.tokenInfo);
+  }, [curNft]);
 
   const addBadgesMenu = (
     <Menu>
@@ -189,7 +186,7 @@ function Nft({ nft, blockExplorer, readContracts, writeContracts, tx }) {
               <Address value={curNft.owner} blockExplorer={blockExplorer} />
             </div>
           }
-          description={<img src={curNft.image} width="200" height="200" onClick={handleBadges} />}
+          description={loading ? "loading" : (<img src={curNft.image} width="200" height="200" onClick={handleBadges} />)}
         />
       </Item>
       <Modal

@@ -265,7 +265,7 @@ function App(props) {
         <Menu.Item key="/Tai-Shang-DAO-NFT-Manager/query">
           <Link to="/Tai-Shang-DAO-NFT-Manager/query">Query Nft</Link>
         </Menu.Item>
-        <Menu.Item key="/debug">
+        <Menu.Item key="/Tai-Shang-DAO-NFT-Manager/debug">
           <Link to="/Tai-Shang-DAO-NFT-Manager/debug">Debug Contracts</Link>
         </Menu.Item>
         {/* <Menu.Item key="/hints">
