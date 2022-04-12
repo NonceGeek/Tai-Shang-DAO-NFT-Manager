@@ -1105,10 +1105,10 @@ module.exports = {
       },
     },
   },
-  4: {
+  1284: {
     contracts: {
       Web3Dev: {
-        address: "0xdfe343b32da3ef2dd7034400c6e133e28b9220bb",
+        address: "0xb6FC950C4bC9D1e4652CbEDaB748E8Cdcfe5655F",
         abi: Web3DevABI,
       },
     },
