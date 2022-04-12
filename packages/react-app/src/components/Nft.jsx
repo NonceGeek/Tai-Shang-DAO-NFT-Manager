@@ -186,7 +186,7 @@ function Nft({ nft, blockExplorer, readContracts, writeContracts, tx }) {
               <Address value={curNft.owner} blockExplorer={blockExplorer} />
             </div>
           }
-          description={<img src={curNft.image} width="200" height="200" onClick={handleBadges} />}
+          description={loading ? "loading" : (<img src={curNft.image} width="200" height="200" onClick={handleBadges} />)}
         />
       </Item>
       <Modal
