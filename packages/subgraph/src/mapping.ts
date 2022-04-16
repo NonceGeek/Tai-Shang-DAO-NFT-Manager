@@ -1,33 +1,38 @@
-import { BigInt, Address } from "@graphprotocol/graph-ts";
 import {
-  YourContract,
-  SetPurpose,
-} from "../generated/YourContract/YourContract";
-import { Purpose, Sender } from "../generated/schema";
+  Web3Dev,
+  Transfer,
+  TokenInfoUpdated,
+} from "../generated/Web3Dev/Web3Dev";
+import { Token, Transfered } from "../generated/schema";
 
-export function handleSetPurpose(event: SetPurpose): void {
-  let senderString = event.params.sender.toHexString();
+export function handleTransfer(event: Transfer): void {
+  let token = Token.load(event.params.tokenId.toString())
+  let transfered = Transfered.load(event.params.tokenId.toString())
 
-  let sender = Sender.load(senderString);
-
-  if (sender === null) {
-    sender = new Sender(senderString);
-    sender.address = event.params.sender;
-    sender.createdAt = event.block.timestamp;
-    sender.purposeCount = BigInt.fromI32(1);
-  } else {
-    sender.purposeCount = sender.purposeCount.plus(BigInt.fromI32(1));
+  if (!token) {
+    token = new Token(event.params.tokenId.toString())
+    token.tokenInfo = ""
+    token.createdAt = event.block.number.toI32()
+  }
+  if (!transfered) {
+    transfered = new Transfered(event.params.tokenId.toString())
   }
 
-  let purpose = new Purpose(
-    event.transaction.hash.toHex() + "-" + event.logIndex.toString()
-  );
+  token.owner = event.params.to
+  token.modifiedAt = event.block.number.toI32()
+  transfered.from = event.params.from
+  transfered.to = event.params.to
 
-  purpose.purpose = event.params.purpose;
-  purpose.sender = senderString;
-  purpose.createdAt = event.block.timestamp;
-  purpose.transactionHash = event.transaction.hash.toHex();
+  token.save()
+  transfered.save()
+}
 
-  purpose.save();
-  sender.save();
+export function handlerTokenInfoUpdated(event: TokenInfoUpdated): void {
+  let token = Token.load(event.params.tokenId.toString())
+  if (!token) {
+    return
+  }
+  token.tokenInfo = event.params.tokenInfo
+  token.modifiedAt = event.block.number.toI32()
+  token.save()
 }
