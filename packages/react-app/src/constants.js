@@ -24,6 +24,14 @@ export const NETWORKS = {
     rpcUrl: `https://mainnet.infura.io/v3/${INFURA_ID}`,
     blockExplorer: "https://etherscan.io/",
   },
+  // add Moonbeam network
+  moonbeam: {
+    name: "moonbeam",
+    color: "#00b0ef",
+    chainId: 1284,
+    blockExplorer: "https://moonbeam.moonscan.io/",
+    rpcUrl: `https://rpc.api.moonbeam.network`,
+  },
   kovan: {
     name: "kovan",
     color: "#7003DD",
@@ -39,6 +47,7 @@ export const NETWORKS = {
     rpcUrl: `https://rinkeby.infura.io/v3/${INFURA_ID}`,
     faucet: "https://faucet.rinkeby.io/",
     blockExplorer: "https://rinkeby.etherscan.io/",
+    subgraphUri: "https://api.thegraph.com/subgraphs/name/itherunder/tai_shang_dao_nft_manager",
   },
   ropsten: {
     name: "ropsten",
