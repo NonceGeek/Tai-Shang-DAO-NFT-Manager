@@ -5,12 +5,21 @@ import Address from "./Address";
 const Item = List.Item;
 
 function Nft({ nft, blockExplorer, readContracts, writeContracts, tx }) {
-  const badgeNames = ["noncegeeker", "learner", "workshoper", "partner", "buidler", "writer", "camper", "puzzler"];
+  // const badgeNames = ["noncegeeker", "learner", "workshoper", "partner", "buidler", "writer", "camper", "puzzler"];
+  const [badgeNames, setBadgeNames] = useState([]);
   const [edit, setEdit] = useState(false);
   const [badges, setBadges] = useState({});
   const [tokenInfo, setTokenInfo] = useState("");
   const [curNft, setCurNft] = useState(nft);
   const [loading, setLoading] = useState(false);
+
+  const getBadgeNames = async () => {
+    let response = await fetch("https://api.github.com/gists/9c765cdeb324685d0d0c0099ba433a19", {
+      method: "GET",
+    });
+    let data = await response.json();
+    setBadgeNames(eval(data?.files["badges.json"].content));
+  };
 
   const parseTokenInfo = tokenInfo_ => {
     if (!tokenInfo_ || tokenInfo_ === "") {
@@ -113,7 +122,8 @@ function Nft({ nft, blockExplorer, readContracts, writeContracts, tx }) {
 
   useEffect(() => {
     if (!curNft) return;
-    console.log("useEffect curNft", curNft);
+    getBadgeNames();
+    // console.log("useEffect curNft", curNft);
     setTokenInfo(curNft.tokenInfo);
     parseTokenInfo(curNft.tokenInfo);
   }, [curNft]);
