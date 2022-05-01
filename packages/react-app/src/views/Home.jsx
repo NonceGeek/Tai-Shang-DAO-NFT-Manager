@@ -3,11 +3,43 @@ import { useContractReader } from "eth-hooks";
 import { useEffect, useState } from "react";
 import { Nft } from "../components";
 
-function Home({ readContracts, writeContracts, tx }) {
+function Home({ readContracts, writeContracts, tx, blockExplorer, subgraphUri }) {
   const totalSupply = useContractReader(readContracts, "Web3Dev", "totalSupply");
   const [nfts, setNfts] = useState([]);
   const [loading, setLoading] = useState(true);
-  const blockExplorer = "https://moonbeam.moonscan.io/";
+
+  const graphQLFetcher = async (graphQLParams) => {
+    let res = await fetch(subgraphUri, {
+      method: "post",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(graphQLParams),
+    });
+    return res.json();
+  }
+
+  const getTokenUri = async (tokens, token) => {
+      let uri = await readContracts.Web3Dev.tokenURI(token.tokenId);
+      // console.log(uri)//, atob(uri));
+      let nft = JSON.parse(atob(uri.split(",")[1]));
+      token = { ...token, ...nft };
+      tokens.push(token);
+  }
+
+  const getAllMintedNftsByGraph = async () => {
+    setLoading(true);
+    let res = await graphQLFetcher({query: `{tokens(first: 100, skip: 0, orderBy: createdAt, orderDirection: desc) {id tokenInfo owner createdAt modifiedAt}}`});
+    console.log(res.data.tokens);
+    var tokens = [];
+    var tasks = [];
+    for (let i = 0; i < res.data.tokens.length; i++) {
+      let token = res.data.tokens[i];
+      token.tokenId = token.id;
+      tasks.push(getTokenUri(tokens, token));
+    }
+    await Promise.all(tasks);
+    setNfts(tokens);
+    setLoading(false);
+  }
 
   const getNft = async (mintedNfts, i) => {
     try {
@@ -42,9 +74,15 @@ function Home({ readContracts, writeContracts, tx }) {
     setLoading(false);
   };
 
+  // useEffect(() => {
+  //   if (!totalSupply || nfts.length > 0) return;
+  //   getAllMintedNfts();
+  // }, [totalSupply]);
+
   useEffect(() => {
     if (!totalSupply || nfts.length > 0) return;
-    getAllMintedNfts();
+    console.error("totalSupply:", totalSupply, nfts);
+    getAllMintedNftsByGraph();
   }, [totalSupply]);
 
   return (

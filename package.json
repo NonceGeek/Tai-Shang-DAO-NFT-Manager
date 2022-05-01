@@ -67,7 +67,9 @@
       "**/hardhat-ts/**"
     ]
   },
-  "dependencies": {},
+  "dependencies": {
+    "eslint-plugin-prettier": "^4.0.0"
+  },
   "devDependencies": {
     "husky": "^7.0.2",
     "prettier": "^2.6.2"
