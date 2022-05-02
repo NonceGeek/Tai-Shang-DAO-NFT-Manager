@@ -1,0 +1,13 @@
+type Token @entity {
+  id: ID!
+  owner: Bytes! # address
+  tokenInfo: String # token badges
+  createdAt: Int # block number
+  modifiedAt: Int # block number
+}
+
+type Transfered @entity {
+  id: ID!
+  from: Bytes! # address
+  to: Bytes! # address
+}

@@ -47,6 +47,7 @@ export const NETWORKS = {
     rpcUrl: `https://rinkeby.infura.io/v3/${INFURA_ID}`,
     faucet: "https://faucet.rinkeby.io/",
     blockExplorer: "https://rinkeby.etherscan.io/",
+    subgraphUri: "https://api.thegraph.com/subgraphs/name/itherunder/tai_shang_dao_nft_manager",
   },
   ropsten: {
     name: "ropsten",
