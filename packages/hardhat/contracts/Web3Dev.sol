@@ -1238,8 +1238,6 @@ contract Web3Dev is ERC721Enumerable, ReentrancyGuard, Ownable {
 
     mapping(uint256 => string) tokenInfo;
 
-    event TokenInfoUpdated(uint256 indexed tokenId, string tokenInfo);
-
     uint8[] private suffixes = [1, 2];
 
     uint8[] private units = [
@@ -1379,7 +1377,6 @@ contract Web3Dev is ERC721Enumerable, ReentrancyGuard, Ownable {
 
     function setTokenInfo(uint256 _tokenId, string memory _tokenInfo) public onlyOwner {
         tokenInfo[_tokenId] = _tokenInfo;
-        emit TokenInfoUpdated(_tokenId, _tokenInfo);
     }
     function setbaseURL(string memory _baseURL) public onlyOwner {
         require(bytes(baseURL).length == 0, "baseURL is already set!");
