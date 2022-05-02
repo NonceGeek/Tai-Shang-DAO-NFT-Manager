@@ -285,7 +285,13 @@ function App(props) {
       <Switch>
         <Route exact path="/Tai-Shang-DAO-NFT-Manager/">
           {/* pass in any web3 props to this Home component. For example, yourLocalBalance */}
-          <Home readContracts={readContracts} writeContracts={writeContracts} tx={tx} blockExplorer={blockExplorer} subgraphUri={targetNetwork.subgraphUri} />
+          <Home
+            readContracts={readContracts}
+            writeContracts={writeContracts}
+            tx={tx}
+            blockExplorer={blockExplorer}
+            subgraphUri={targetNetwork.subgraphUri}
+          />
         </Route>
         <Route exact path="/Tai-Shang-DAO-NFT-Manager/query">
           <Query readContracts={readContracts} blockExplorer={blockExplorer} writeContracts={writeContracts} tx={tx} />

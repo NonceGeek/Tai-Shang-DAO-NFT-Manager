@@ -8,26 +8,28 @@ function Home({ readContracts, writeContracts, tx, blockExplorer, subgraphUri })
   const [nfts, setNfts] = useState([]);
   const [loading, setLoading] = useState(true);
 
-  const graphQLFetcher = async (graphQLParams) => {
+  const graphQLFetcher = async graphQLParams => {
     let res = await fetch(subgraphUri, {
       method: "post",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(graphQLParams),
     });
     return res.json();
-  }
+  };
 
   const getTokenUri = async (tokens, token) => {
-      let uri = await readContracts.Web3Dev.tokenURI(token.tokenId);
-      // console.log(uri)//, atob(uri));
-      let nft = JSON.parse(atob(uri.split(",")[1]));
-      token = { ...token, ...nft };
-      tokens.push(token);
-  }
+    let uri = await readContracts.Web3Dev.tokenURI(token.tokenId);
+    // console.log(uri)//, atob(uri));
+    let nft = JSON.parse(atob(uri.split(",")[1]));
+    token = { ...token, ...nft };
+    tokens.push(token);
+  };
 
   const getAllMintedNftsByGraph = async () => {
     setLoading(true);
-    let res = await graphQLFetcher({query: `{tokens(first: 100, skip: 0, orderBy: createdAt, orderDirection: desc) {id tokenInfo owner createdAt modifiedAt}}`});
+    let res = await graphQLFetcher({
+      query: `{tokens(first: 100, skip: 0, orderBy: createdAt, orderDirection: desc) {id tokenInfo owner createdAt modifiedAt}}`,
+    });
     console.log(res.data.tokens);
     var tokens = [];
     var tasks = [];
@@ -39,7 +41,7 @@ function Home({ readContracts, writeContracts, tx, blockExplorer, subgraphUri })
     await Promise.all(tasks);
     setNfts(tokens);
     setLoading(false);
-  }
+  };
 
   const getNft = async (mintedNfts, i) => {
     try {
