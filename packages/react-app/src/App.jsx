@@ -29,7 +29,7 @@ import externalContracts from "./contracts/external_contracts";
 // contracts
 import deployedContracts from "./contracts/hardhat_contracts.json";
 import { Transactor, Web3ModalSetup } from "./helpers";
-import { Home, Query } from "./views";
+import { Home, Query, ExampleUI, Hints, Subgraph } from "./views";
 import { useStaticJsonRPC } from "./hooks";
 
 const { ethers } = require("ethers");
@@ -169,7 +169,7 @@ function App(props) {
   ]);
 
   // keep track of a variable from the contract in the local React state:
-  // const purpose = useContractReader(readContracts, "Web3Dev", "purpose");
+  const purpose = useContractReader(readContracts, "Web3Dev", "purpose");
 
   /*
   const addressFromENS = useResolveName(mainnetProvider, "austingriffith.eth");
@@ -285,13 +285,7 @@ function App(props) {
       <Switch>
         <Route exact path="/Tai-Shang-DAO-NFT-Manager/">
           {/* pass in any web3 props to this Home component. For example, yourLocalBalance */}
-          <Home
-            readContracts={readContracts}
-            writeContracts={writeContracts}
-            tx={tx}
-            blockExplorer={blockExplorer}
-            subgraphUri={targetNetwork.subgraphUri}
-          />
+          <Home readContracts={readContracts} writeContracts={writeContracts} tx={tx} />
         </Route>
         <Route exact path="/Tai-Shang-DAO-NFT-Manager/query">
           <Query readContracts={readContracts} blockExplorer={blockExplorer} writeContracts={writeContracts} tx={tx} />
