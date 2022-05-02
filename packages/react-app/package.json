@@ -100,6 +100,7 @@
     "theme": "npx gulp less",
     "watch": "node ./scripts/watch.js",
     "prettier": "npx prettier --write . '!(node_module|build)/**/*'",
+    "predeploy": "npm run build",
     "deploy": "gh-pages -d build"
   }
 }
